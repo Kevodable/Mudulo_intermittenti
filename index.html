@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Modulo Contratto Intermittente</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f0f4f8;
+      color: #1a202c;
+      min-height: 100vh;
+      padding: 24px 16px;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    header {
+      background: #1a3a5c;
+      color: #fff;
+      border-radius: 10px 10px 0 0;
+      padding: 20px 28px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    header .logo {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -1px;
+      color: #7eb8f7;
+    }
+
+    header .title-block h1 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+
+    header .title-block p {
+      font-size: 0.78rem;
+      opacity: 0.75;
+      margin-top: 2px;
+    }
+
+    .badge {
+      margin-left: auto;
+      background: #2563eb;
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-top: none;
+      padding: 28px;
+    }
+
+    .card + .card {
+      border-top: 1px solid #e2e8f0;
+    }
+
+    .card:last-of-type {
+      border-radius: 0 0 10px 10px;
+    }
+
+    .section-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #2563eb;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #dbeafe;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 580px) {
+      .grid-2 { grid-template-columns: 1fr; }
+    }
+
+    label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #4a5568;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="date"] {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1.5px solid #cbd5e0;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      color: #1a202c;
+      transition: border-color 0.2s;
+      background: #f8fafc;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #2563eb;
+      background: #fff;
+    }
+
+    input.uppercase { text-transform: uppercase; }
+
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .toggle {
+      position: relative;
+      width: 44px;
+      height: 24px;
+      flex-shrink: 0;
+    }
+
+    .toggle input { opacity: 0; width: 0; height: 0; }
+
+    .toggle-slider {
+      position: absolute;
+      inset: 0;
+      background: #cbd5e0;
+      border-radius: 24px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .toggle-slider::before {
+      content: '';
+      position: absolute;
+      width: 18px; height: 18px;
+      left: 3px; top: 3px;
+      background: #fff;
+      border-radius: 50%;
+      transition: 0.3s;
+    }
+
+    .toggle input:checked + .toggle-slider { background: #dc2626; }
+    .toggle input:checked + .toggle-slider::before { transform: translateX(20px); }
+
+    .toggle-label {
+      font-size: 0.85rem;
+      color: #4a5568;
+    }
+
+    /* Workers table */
+    .workers-header {
+      display: grid;
+      grid-template-columns: 32px 1fr 180px 110px 110px;
+      gap: 10px;
+      padding: 6px 10px;
+      background: #f1f5f9;
+      border-radius: 6px 6px 0 0;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .worker-row {
+      display: grid;
+      grid-template-columns: 32px 1fr 180px 110px 110px;
+      gap: 10px;
+      padding: 8px 10px;
+      border-bottom: 1px solid #e2e8f0;
+      align-items: center;
+    }
+
+    .worker-row:last-child { border-bottom: none; }
+
+    .worker-num {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #94a3b8;
+      text-align: center;
+    }
+
+    @media (max-width: 620px) {
+      .workers-header { display: none; }
+      .worker-row {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto auto;
+        padding: 12px 10px;
+      }
+      .worker-num { grid-column: 1 / -1; text-align: left; color: #2563eb; font-size: 0.75rem; }
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      border-radius: 7px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 11px 22px;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    button:active { transform: scale(0.98); }
+
+    .btn-primary {
+      background: #2563eb;
+      color: #fff;
+    }
+    .btn-primary:hover { background: #1d4ed8; }
+
+    .btn-secondary {
+      background: #f1f5f9;
+      color: #374151;
+      border: 1.5px solid #cbd5e0;
+    }
+    .btn-secondary:hover { background: #e2e8f0; }
+
+    .btn-danger {
+      background: #fef2f2;
+      color: #dc2626;
+      border: 1.5px solid #fca5a5;
+    }
+    .btn-danger:hover { background: #fee2e2; }
+
+    /* XML output */
+    #xml-output {
+      display: none;
+      margin-top: 24px;
+    }
+
+    #xml-output .output-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    #xml-output .output-header span {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #374151;
+    }
+
+    #xml-code {
+      background: #0f172a;
+      color: #7dd3fc;
+      font-family: 'Consolas', 'Fira Code', monospace;
+      font-size: 0.8rem;
+      line-height: 1.6;
+      padding: 20px;
+      border-radius: 8px;
+      overflow-x: auto;
+      white-space: pre;
+    }
+
+    .copy-btn {
+      background: #0f172a;
+      color: #7dd3fc;
+      border: 1.5px solid #334155;
+      font-size: 0.78rem;
+      padding: 6px 14px;
+    }
+    .copy-btn:hover { background: #1e293b; }
+
+    .download-btn {
+      background: #059669;
+      color: #fff;
+      font-size: 0.78rem;
+      padding: 6px 14px;
+    }
+    .download-btn:hover { background: #047857; }
+
+    .alert {
+      display: none;
+      background: #fef3c7;
+      border: 1.5px solid #f59e0b;
+      color: #92400e;
+      border-radius: 7px;
+      padding: 10px 16px;
+      font-size: 0.85rem;
+      margin-top: 12px;
+    }
+
+    .info-box {
+      background: #eff6ff;
+      border-left: 4px solid #2563eb;
+      border-radius: 0 6px 6px 0;
+      padding: 10px 14px;
+      font-size: 0.78rem;
+      color: #1e40af;
+      margin-bottom: 20px;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.72rem;
+      color: #94a3b8;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="logo">ML</div>
+    <div class="title-block">
+      <h1>Modulo Comunicazione Lavoratori Intermittenti</h1>
+      <p>Ministero del Lavoro e delle Politiche Sociali — Modello ML-15-01</p>
+    </div>
+    <span class="badge">ML-15-01</span>
+  </header>
+
+  <!-- Sezione Datore di Lavoro -->
+  <div class="card">
+    <div class="section-title">Datore di Lavoro</div>
+    <div class="info-box">
+      Compilare i campi del datore di lavoro e inserire fino a 10 lavoratori con i relativi periodi di impiego.
+      Il sistema genererà automaticamente il file XML conforme al modello ministeriale.
+    </div>
+    <div class="grid-2">
+      <div>
+        <label for="cf-datore">Codice Fiscale Datore di Lavoro *</label>
+        <input type="text" id="cf-datore" class="uppercase" maxlength="16" placeholder="es. 03433870262" required />
+      </div>
+      <div>
+        <label for="email">E-mail *</label>
+        <input type="email" id="email" placeholder="es. email@esempio.it" required />
+      </div>
+    </div>
+
+    <div style="margin-top:16px;">
+      <div class="toggle-row">
+        <label class="toggle">
+          <input type="checkbox" id="annullamento" />
+          <span class="toggle-slider"></span>
+        </label>
+        <span class="toggle-label">
+          <strong>Annullamento comunicazione</strong> — attiva se si vuole annullare una comunicazione precedente
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sezione Lavoratori -->
+  <div class="card">
+    <div class="section-title">Lavoratori (max 10)</div>
+
+    <div class="workers-header">
+      <span>#</span>
+      <span>Codice Fiscale Lavoratore</span>
+      <span>Cod. Comunicazione</span>
+      <span>Data Inizio</span>
+      <span>Data Fine</span>
+    </div>
+
+    <div id="workers-list"></div>
+
+    <div style="margin-top:14px; display:flex; gap:10px;">
+      <button class="btn-secondary" onclick="addWorker()">+ Aggiungi Lavoratore</button>
+    </div>
+  </div>
+
+  <!-- Azioni -->
+  <div class="card" style="border-radius:0 0 10px 10px;">
+    <div class="actions" style="margin-top:0; padding-top:0; border-top:none;">
+      <button class="btn-primary" onclick="generateXML()">Genera XML</button>
+      <button class="btn-secondary" onclick="resetForm()">Azzera</button>
+    </div>
+
+    <div class="alert" id="alert-msg"></div>
+
+    <div id="xml-output">
+      <div class="output-header">
+        <span>File XML generato</span>
+        <div style="display:flex;gap:8px;">
+          <button class="copy-btn" onclick="copyXML()">Copia</button>
+          <button class="download-btn" onclick="downloadXML()">Scarica XML</button>
+        </div>
+      </div>
+      <pre id="xml-code"></pre>
+    </div>
+  </div>
+
+  <footer>Strumento non ufficiale — generazione locale, nessun dato inviato a server esterni.</footer>
+</div>
+
+<script>
+  let workerCount = 0;
+
+  function addWorker() {
+    if (workerCount >= 10) {
+      showAlert('Numero massimo di lavoratori raggiunto (10).');
+      return;
+    }
+    workerCount++;
+    const n = workerCount;
+    const list = document.getElementById('workers-list');
+    const row = document.createElement('div');
+    row.className = 'worker-row';
+    row.id = 'worker-' + n;
+    row.innerHTML = `
+      <div class="worker-num">${n}</div>
+      <div><input type="text" class="uppercase" id="cf${n}" maxlength="16" placeholder="Codice Fiscale" /></div>
+      <div><input type="text" id="cc${n}" maxlength="50" placeholder="(opzionale)" /></div>
+      <div><input type="date" id="di${n}" /></div>
+      <div style="display:flex;gap:6px;align-items:center;">
+        <input type="date" id="df${n}" style="flex:1;" />
+        <button class="btn-danger" style="padding:7px 10px;font-size:0.75rem;" onclick="removeWorker(${n})">✕</button>
+      </div>
+    `;
+    list.appendChild(row);
+  }
+
+  function removeWorker(n) {
+    const row = document.getElementById('worker-' + n);
+    if (row) row.remove();
+  }
+
+  function showAlert(msg) {
+    const el = document.getElementById('alert-msg');
+    el.textContent = msg;
+    el.style.display = 'block';
+    setTimeout(() => { el.style.display = 'none'; }, 4000);
+  }
+
+  function formatDate(val) {
+    if (!val) return '';
+    // val is YYYY-MM-DD from date input, convert to DD/MM/YYYY
+    const [y, m, d] = val.split('-');
+    return `${d}/${m}/${y}`;
+  }
+
+  function generateXML() {
+    const cfDatore = document.getElementById('cf-datore').value.trim().toUpperCase();
+    const email = document.getElementById('email').value.trim();
+    const annullamento = document.getElementById('annullamento').checked ? '1' : '0';
+
+    if (!cfDatore) { showAlert('Inserire il Codice Fiscale del Datore di Lavoro.'); return; }
+    if (!email) { showAlert('Inserire l\'indirizzo e-mail.'); return; }
+
+    // collect workers
+    const workers = [];
+    for (let i = 1; i <= 10; i++) {
+      const cfEl = document.getElementById('cf' + i);
+      if (!cfEl) continue;
+      const cf = cfEl.value.trim().toUpperCase();
+      const cc = document.getElementById('cc' + i).value.trim();
+      const di = document.getElementById('di' + i).value;
+      const df = document.getElementById('df' + i).value;
+      if (cf || di || df) {
+        workers.push({ cf, cc, di: formatDate(di), df: formatDate(df), idx: i });
+      }
+    }
+
+    if (workers.length === 0) { showAlert('Inserire almeno un lavoratore.'); return; }
+
+    // validate workers
+    for (const w of workers) {
+      if (!w.cf) { showAlert(`Lavoratore ${w.idx}: Codice Fiscale mancante.`); return; }
+      if (!w.di) { showAlert(`Lavoratore ${w.idx}: Data di inizio mancante.`); return; }
+      if (!w.df) { showAlert(`Lavoratore ${w.idx}: Data di fine mancante.`); return; }
+    }
+
+    // build XML — pad to 10 slots
+    let xml = `<?xml version="1.0" encoding="UTF-8"?>\n`;
+    xml += `<moduloIntermittenti>\n`;
+    xml += `  <Campi>\n`;
+    xml += `    <CFdatorelavoro>${esc(cfDatore)}</CFdatorelavoro>\n`;
+    xml += `    <BCbarcodeModello01>ML-15-01</BCbarcodeModello01>\n`;
+    xml += `    <BCbarcodeModello01>ML-15-01</BCbarcodeModello01>\n`;
+    xml += `    <EMmail>${esc(email)}</EMmail>\n`;
+    xml += `    <ANannullamento>${annullamento}</ANannullamento>\n`;
+
+    for (let i = 1; i <= 10; i++) {
+      const w = workers.find(x => x.idx === i) || null;
+      // find positional worker (ordered)
+      const pw = workers[i - 1] || null;
+      const slot = pw;
+      if (slot) {
+        xml += `    <CFlavoratore${i}>${esc(slot.cf)}</CFlavoratore${i}>\n`;
+        xml += `    <CCcodcomunicazione${i}>${esc(slot.cc)}</CCcodcomunicazione${i}>\n`;
+        xml += `    <DTdatainizio${i}>${esc(slot.di)}</DTdatainizio${i}>\n`;
+        xml += `    <DTdatafine${i}>${esc(slot.df)}</DTdatafine${i}>\n`;
+      } else {
+        xml += `    <CFlavoratore${i}/>\n`;
+        xml += `    <CCcodcomunicazione${i}/>\n`;
+        xml += `    <DTdatainizio${i}/>\n`;
+        xml += `    <DTdatafine${i}/>\n`;
+      }
+    }
+
+    xml += `  </Campi>\n`;
+    xml += `</moduloIntermittenti>\n`;
+
+    document.getElementById('xml-code').textContent = xml;
+    document.getElementById('xml-output').style.display = 'block';
+    document.getElementById('xml-output').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function esc(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function copyXML() {
+    const text = document.getElementById('xml-code').textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      showAlert('XML copiato negli appunti!');
+    });
+  }
+
+  function downloadXML() {
+    const text = document.getElementById('xml-code').textContent;
+    const blob = new Blob([text], { type: 'application/xml' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'modulo_CONTRATTO_INTERMITTENTE.xml';
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function resetForm() {
+    document.getElementById('cf-datore').value = '';
+    document.getElementById('email').value = '';
+    document.getElementById('annullamento').checked = false;
+    document.getElementById('workers-list').innerHTML = '';
+    workerCount = 0;
+    document.getElementById('xml-output').style.display = 'none';
+  }
+
+  // Start with 3 worker rows
+  addWorker();
+  addWorker();
+  addWorker();
+</script>
+</body>
+</html>
