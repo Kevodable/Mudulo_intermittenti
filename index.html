@@ -15,10 +15,7 @@
       padding: 24px 16px;
     }
 
-    .container {
-      max-width: 860px;
-      margin: 0 auto;
-    }
+    .container { max-width: 860px; margin: 0 auto; }
 
     header {
       background: #1a3a5c;
@@ -30,24 +27,9 @@
       gap: 16px;
     }
 
-    header .logo {
-      font-size: 2rem;
-      font-weight: 800;
-      letter-spacing: -1px;
-      color: #7eb8f7;
-    }
-
-    header .title-block h1 {
-      font-size: 1.15rem;
-      font-weight: 700;
-      line-height: 1.3;
-    }
-
-    header .title-block p {
-      font-size: 0.78rem;
-      opacity: 0.75;
-      margin-top: 2px;
-    }
+    header .logo { font-size: 2rem; font-weight: 800; letter-spacing: -1px; color: #7eb8f7; }
+    header .title-block h1 { font-size: 1.15rem; font-weight: 700; line-height: 1.3; }
+    header .title-block p { font-size: 0.78rem; opacity: 0.75; margin-top: 2px; }
 
     .badge {
       margin-left: auto;
@@ -67,13 +49,8 @@
       padding: 28px;
     }
 
-    .card + .card {
-      border-top: 1px solid #e2e8f0;
-    }
-
-    .card:last-of-type {
-      border-radius: 0 0 10px 10px;
-    }
+    .card + .card { border-top: 1px solid #e2e8f0; }
+    .card:last-of-type { border-radius: 0 0 10px 10px; }
 
     .section-title {
       font-size: 0.72rem;
@@ -84,17 +61,13 @@
       margin-bottom: 16px;
       padding-bottom: 8px;
       border-bottom: 2px solid #dbeafe;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
-    .grid-2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-
-    @media (max-width: 580px) {
-      .grid-2 { grid-template-columns: 1fr; }
-    }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 580px) { .grid-2 { grid-template-columns: 1fr; } }
 
     label {
       display: block;
@@ -117,27 +90,26 @@
       background: #f8fafc;
     }
 
-    input:focus {
-      outline: none;
-      border-color: #2563eb;
-      background: #fff;
-    }
-
+    input:focus { outline: none; border-color: #2563eb; background: #fff; }
     input.uppercase { text-transform: uppercase; }
 
-    .toggle-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
+    /* saved badge on employer fields */
+    .saved-indicator {
+      display: inline-block;
+      font-size: 0.65rem;
+      background: #d1fae5;
+      color: #065f46;
+      border-radius: 10px;
+      padding: 1px 8px;
+      margin-left: 6px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      vertical-align: middle;
     }
 
-    .toggle {
-      position: relative;
-      width: 44px;
-      height: 24px;
-      flex-shrink: 0;
-    }
+    .toggle-row { display: flex; align-items: center; gap: 12px; }
 
+    .toggle { position: relative; width: 44px; height: 24px; flex-shrink: 0; }
     .toggle input { opacity: 0; width: 0; height: 0; }
 
     .toggle-slider {
@@ -161,17 +133,13 @@
 
     .toggle input:checked + .toggle-slider { background: #dc2626; }
     .toggle input:checked + .toggle-slider::before { transform: translateX(20px); }
-
-    .toggle-label {
-      font-size: 0.85rem;
-      color: #4a5568;
-    }
+    .toggle-label { font-size: 0.85rem; color: #4a5568; }
 
     /* Workers table */
     .workers-header {
       display: grid;
-      grid-template-columns: 32px 1fr 180px 110px 110px;
-      gap: 10px;
+      grid-template-columns: 28px 1fr 160px 105px 105px 36px;
+      gap: 8px;
       padding: 6px 10px;
       background: #f1f5f9;
       border-radius: 6px 6px 0 0;
@@ -184,8 +152,8 @@
 
     .worker-row {
       display: grid;
-      grid-template-columns: 32px 1fr 180px 110px 110px;
-      gap: 10px;
+      grid-template-columns: 28px 1fr 160px 105px 105px 36px;
+      gap: 8px;
       padding: 8px 10px;
       border-bottom: 1px solid #e2e8f0;
       align-items: center;
@@ -193,30 +161,136 @@
 
     .worker-row:last-child { border-bottom: none; }
 
-    .worker-num {
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: #94a3b8;
-      text-align: center;
+    .worker-num { font-size: 0.8rem; font-weight: 700; color: #94a3b8; text-align: center; }
+
+    /* CF input wrapper for autocomplete dropdown */
+    .cf-wrap { position: relative; }
+
+    .cf-dropdown {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: #fff;
+      border: 1.5px solid #2563eb;
+      border-top: none;
+      border-radius: 0 0 6px 6px;
+      z-index: 100;
+      max-height: 180px;
+      overflow-y: auto;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
+
+    .cf-dropdown-item {
+      padding: 8px 12px;
+      font-size: 0.82rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .cf-dropdown-item:hover { background: #eff6ff; }
+
+    .cf-dropdown-item .cf-name {
+      font-weight: 600;
+      color: #1e40af;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .cf-dropdown-item .cf-code {
+      font-family: monospace;
+      font-size: 0.75rem;
+      color: #64748b;
+      flex-shrink: 0;
+    }
+
+    .cf-dropdown-item .cf-del {
+      flex-shrink: 0;
+      font-size: 0.7rem;
+      color: #dc2626;
+      background: #fef2f2;
+      border: 1px solid #fca5a5;
+      border-radius: 4px;
+      padding: 1px 5px;
+      cursor: pointer;
+    }
+
+    .cf-dropdown-item .cf-del:hover { background: #fee2e2; }
+
+    /* Save worker button */
+    .btn-save-worker {
+      background: #f0fdf4;
+      color: #15803d;
+      border: 1.5px solid #86efac;
+      border-radius: 6px;
+      padding: 7px 9px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s;
+    }
+    .btn-save-worker:hover { background: #dcfce7; }
+    .btn-save-worker.saved { background: #d1fae5; color: #065f46; border-color: #6ee7b7; }
 
     @media (max-width: 620px) {
       .workers-header { display: none; }
       .worker-row {
         grid-template-columns: 1fr 1fr;
-        grid-template-rows: auto auto auto;
+        grid-template-rows: auto auto auto auto;
         padding: 12px 10px;
+        gap: 6px;
       }
       .worker-num { grid-column: 1 / -1; text-align: left; color: #2563eb; font-size: 0.75rem; }
     }
+
+    /* Rubrica panel */
+    .rubrica-panel {
+      background: #f8fafc;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 16px;
+      margin-top: 20px;
+    }
+
+    .rubrica-panel h3 {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #374151;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .rubrica-list { display: flex; flex-direction: column; gap: 6px; }
+
+    .rubrica-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 8px 12px;
+      font-size: 0.83rem;
+    }
+
+    .rubrica-item .r-name { font-weight: 600; color: #1e40af; flex: 1; }
+    .rubrica-item .r-cf { font-family: monospace; color: #64748b; font-size: 0.8rem; }
+    .rubrica-item .r-del { font-size: 0.7rem; color: #dc2626; background: #fef2f2; border: 1px solid #fca5a5; border-radius: 4px; padding: 2px 7px; cursor: pointer; }
+    .rubrica-item .r-del:hover { background: #fee2e2; }
+
+    .rubrica-empty { font-size: 0.8rem; color: #94a3b8; font-style: italic; }
 
     .actions {
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
-      margin-top: 24px;
-      padding-top: 20px;
-      border-top: 1px solid #e2e8f0;
     }
 
     button {
@@ -231,31 +305,17 @@
 
     button:active { transform: scale(0.98); }
 
-    .btn-primary {
-      background: #2563eb;
-      color: #fff;
-    }
+    .btn-primary { background: #2563eb; color: #fff; }
     .btn-primary:hover { background: #1d4ed8; }
 
-    .btn-secondary {
-      background: #f1f5f9;
-      color: #374151;
-      border: 1.5px solid #cbd5e0;
-    }
+    .btn-secondary { background: #f1f5f9; color: #374151; border: 1.5px solid #cbd5e0; }
     .btn-secondary:hover { background: #e2e8f0; }
 
-    .btn-danger {
-      background: #fef2f2;
-      color: #dc2626;
-      border: 1.5px solid #fca5a5;
-    }
+    .btn-danger { background: #fef2f2; color: #dc2626; border: 1.5px solid #fca5a5; }
     .btn-danger:hover { background: #fee2e2; }
 
     /* XML output */
-    #xml-output {
-      display: none;
-      margin-top: 24px;
-    }
+    #xml-output { display: none; margin-top: 24px; }
 
     #xml-output .output-header {
       display: flex;
@@ -264,11 +324,7 @@
       margin-bottom: 10px;
     }
 
-    #xml-output .output-header span {
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: #374151;
-    }
+    #xml-output .output-header span { font-size: 0.85rem; font-weight: 700; color: #374151; }
 
     #xml-code {
       background: #0f172a;
@@ -282,33 +338,22 @@
       white-space: pre;
     }
 
-    .copy-btn {
-      background: #0f172a;
-      color: #7dd3fc;
-      border: 1.5px solid #334155;
-      font-size: 0.78rem;
-      padding: 6px 14px;
-    }
+    .copy-btn { background: #0f172a; color: #7dd3fc; border: 1.5px solid #334155; font-size: 0.78rem; padding: 6px 14px; }
     .copy-btn:hover { background: #1e293b; }
 
-    .download-btn {
-      background: #059669;
-      color: #fff;
-      font-size: 0.78rem;
-      padding: 6px 14px;
-    }
+    .download-btn { background: #059669; color: #fff; font-size: 0.78rem; padding: 6px 14px; }
     .download-btn:hover { background: #047857; }
 
     .alert {
       display: none;
-      background: #fef3c7;
-      border: 1.5px solid #f59e0b;
-      color: #92400e;
       border-radius: 7px;
       padding: 10px 16px;
       font-size: 0.85rem;
       margin-top: 12px;
     }
+
+    .alert.warn { background: #fef3c7; border: 1.5px solid #f59e0b; color: #92400e; }
+    .alert.success { background: #d1fae5; border: 1.5px solid #6ee7b7; color: #065f46; }
 
     .info-box {
       background: #eff6ff;
@@ -320,12 +365,35 @@
       margin-bottom: 20px;
     }
 
-    footer {
-      text-align: center;
-      font-size: 0.72rem;
-      color: #94a3b8;
-      margin-top: 20px;
+    /* Save worker modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
     }
+
+    .modal-overlay.open { display: flex; }
+
+    .modal {
+      background: #fff;
+      border-radius: 10px;
+      padding: 28px;
+      width: min(400px, 90vw);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    }
+
+    .modal h2 { font-size: 1rem; margin-bottom: 16px; color: #1a202c; }
+
+    .modal label { font-size: 0.78rem; font-weight: 600; color: #4a5568; margin-bottom: 4px; }
+    .modal input { margin-bottom: 14px; }
+
+    .modal-actions { display: flex; gap: 10px; margin-top: 4px; }
+
+    footer { text-align: center; font-size: 0.72rem; color: #94a3b8; margin-top: 20px; }
   </style>
 </head>
 <body>
@@ -340,12 +408,14 @@
     <span class="badge">ML-15-01</span>
   </header>
 
-  <!-- Sezione Datore di Lavoro -->
+  <!-- Datore di Lavoro -->
   <div class="card">
-    <div class="section-title">Datore di Lavoro</div>
+    <div class="section-title">
+      Datore di Lavoro
+      <span class="saved-indicator" id="saved-badge" style="display:none;">memorizzato</span>
+    </div>
     <div class="info-box">
-      Compilare i campi del datore di lavoro e inserire fino a 10 lavoratori con i relativi periodi di impiego.
-      Il sistema genererà automaticamente il file XML conforme al modello ministeriale.
+      I dati del datore di lavoro vengono salvati automaticamente. Per i lavoratori puoi salvarli in rubrica e richiamarli dal menu a tendina.
     </div>
     <div class="grid-2">
       <div>
@@ -357,7 +427,6 @@
         <input type="email" id="email" placeholder="es. email@esempio.it" required />
       </div>
     </div>
-
     <div style="margin-top:16px;">
       <div class="toggle-row">
         <label class="toggle">
@@ -371,7 +440,7 @@
     </div>
   </div>
 
-  <!-- Sezione Lavoratori -->
+  <!-- Lavoratori -->
   <div class="card">
     <div class="section-title">Lavoratori (max 10)</div>
 
@@ -381,18 +450,25 @@
       <span>Cod. Comunicazione</span>
       <span>Data Inizio</span>
       <span>Data Fine</span>
+      <span></span>
     </div>
 
     <div id="workers-list"></div>
 
-    <div style="margin-top:14px; display:flex; gap:10px;">
+    <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
       <button class="btn-secondary" onclick="addWorker()">+ Aggiungi Lavoratore</button>
+    </div>
+
+    <!-- Rubrica -->
+    <div class="rubrica-panel" id="rubrica-panel">
+      <h3>Rubrica lavoratori salvati</h3>
+      <div class="rubrica-list" id="rubrica-list"></div>
     </div>
   </div>
 
   <!-- Azioni -->
   <div class="card" style="border-radius:0 0 10px 10px;">
-    <div class="actions" style="margin-top:0; padding-top:0; border-top:none;">
+    <div class="actions">
       <button class="btn-primary" onclick="generateXML()">Genera XML</button>
       <button class="btn-secondary" onclick="resetForm()">Azzera</button>
     </div>
@@ -411,17 +487,137 @@
     </div>
   </div>
 
-  <footer>Strumento non ufficiale — generazione locale, nessun dato inviato a server esterni.</footer>
+  <footer>Strumento non ufficiale — tutti i dati sono salvati solo sul tuo dispositivo, nessun dato inviato a server esterni.</footer>
+</div>
+
+<!-- Modal salva lavoratore -->
+<div class="modal-overlay" id="save-modal">
+  <div class="modal">
+    <h2>Salva lavoratore in rubrica</h2>
+    <label for="modal-name">Nome e Cognome</label>
+    <input type="text" id="modal-name" placeholder="es. Mario Rossi" />
+    <label>Codice Fiscale</label>
+    <input type="text" id="modal-cf" class="uppercase" readonly style="background:#f1f5f9;color:#64748b;" />
+    <div class="modal-actions">
+      <button class="btn-primary" onclick="confirmSaveWorker()">Salva</button>
+      <button class="btn-secondary" onclick="closeModal()">Annulla</button>
+    </div>
+  </div>
 </div>
 
 <script>
-  let workerCount = 0;
+  // ── Storage keys ────────────────────────────────────────────
+  const KEY_DATORE = 'ml15_datore';
+  const KEY_RUBRICA = 'ml15_rubrica';
 
-  function addWorker() {
-    if (workerCount >= 10) {
-      showAlert('Numero massimo di lavoratori raggiunto (10).');
+  // ── State ───────────────────────────────────────────────────
+  let workerCount = 0;
+  let modalTargetCf = '';
+
+  // ── Employer: auto-save & restore ───────────────────────────
+  function saveDatore() {
+    const data = {
+      cf: document.getElementById('cf-datore').value.trim().toUpperCase(),
+      email: document.getElementById('email').value.trim()
+    };
+    localStorage.setItem(KEY_DATORE, JSON.stringify(data));
+    const badge = document.getElementById('saved-badge');
+    badge.style.display = 'inline-block';
+    setTimeout(() => { badge.style.display = 'none'; }, 2000);
+  }
+
+  function loadDatore() {
+    const raw = localStorage.getItem(KEY_DATORE);
+    if (!raw) return;
+    try {
+      const d = JSON.parse(raw);
+      if (d.cf) document.getElementById('cf-datore').value = d.cf;
+      if (d.email) document.getElementById('email').value = d.email;
+      document.getElementById('saved-badge').style.display = 'inline-block';
+    } catch {}
+  }
+
+  document.getElementById('cf-datore').addEventListener('input', debounce(saveDatore, 600));
+  document.getElementById('email').addEventListener('input', debounce(saveDatore, 600));
+
+  // ── Rubrica ─────────────────────────────────────────────────
+  function getRubrica() {
+    try { return JSON.parse(localStorage.getItem(KEY_RUBRICA)) || []; }
+    catch { return []; }
+  }
+
+  function saveRubrica(list) {
+    localStorage.setItem(KEY_RUBRICA, JSON.stringify(list));
+  }
+
+  function renderRubrica() {
+    const list = getRubrica();
+    const el = document.getElementById('rubrica-list');
+    if (list.length === 0) {
+      el.innerHTML = '<span class="rubrica-empty">Nessun lavoratore salvato. Usa il pulsante verde nella riga del lavoratore.</span>';
       return;
     }
+    el.innerHTML = list.map((w, i) => `
+      <div class="rubrica-item">
+        <span class="r-name">${escHtml(w.name)}</span>
+        <span class="r-cf">${escHtml(w.cf)}</span>
+        <span class="r-del" onclick="deleteFromRubrica(${i})">Rimuovi</span>
+      </div>
+    `).join('');
+  }
+
+  function deleteFromRubrica(idx) {
+    const list = getRubrica();
+    list.splice(idx, 1);
+    saveRubrica(list);
+    renderRubrica();
+    // refresh dropdowns in open rows
+    document.querySelectorAll('.cf-input').forEach(inp => updateDropdown(inp));
+  }
+
+  // ── Modal ────────────────────────────────────────────────────
+  function openSaveModal(cf) {
+    modalTargetCf = cf.toUpperCase();
+    document.getElementById('modal-cf').value = modalTargetCf;
+    // pre-fill name if already in rubrica
+    const existing = getRubrica().find(w => w.cf === modalTargetCf);
+    document.getElementById('modal-name').value = existing ? existing.name : '';
+    document.getElementById('save-modal').classList.add('open');
+    setTimeout(() => document.getElementById('modal-name').focus(), 50);
+  }
+
+  function closeModal() {
+    document.getElementById('save-modal').classList.remove('open');
+  }
+
+  function confirmSaveWorker() {
+    const name = document.getElementById('modal-name').value.trim();
+    const cf = document.getElementById('modal-cf').value.trim().toUpperCase();
+    if (!name) { document.getElementById('modal-name').focus(); return; }
+    const list = getRubrica();
+    const idx = list.findIndex(w => w.cf === cf);
+    if (idx >= 0) list[idx] = { name, cf };
+    else list.push({ name, cf });
+    saveRubrica(list);
+    renderRubrica();
+    // refresh dropdowns
+    document.querySelectorAll('.cf-input').forEach(inp => updateDropdown(inp));
+    closeModal();
+    showAlert('Lavoratore salvato in rubrica.', 'success');
+  }
+
+  document.getElementById('modal-name').addEventListener('keydown', e => {
+    if (e.key === 'Enter') confirmSaveWorker();
+    if (e.key === 'Escape') closeModal();
+  });
+
+  document.getElementById('save-modal').addEventListener('click', e => {
+    if (e.target === document.getElementById('save-modal')) closeModal();
+  });
+
+  // ── Workers ──────────────────────────────────────────────────
+  function addWorker() {
+    if (workerCount >= 10) { showAlert('Numero massimo di lavoratori raggiunto (10).', 'warn'); return; }
     workerCount++;
     const n = workerCount;
     const list = document.getElementById('workers-list');
@@ -430,45 +626,89 @@
     row.id = 'worker-' + n;
     row.innerHTML = `
       <div class="worker-num">${n}</div>
-      <div><input type="text" class="uppercase" id="cf${n}" maxlength="16" placeholder="Codice Fiscale" /></div>
+      <div class="cf-wrap">
+        <input type="text" class="uppercase cf-input" id="cf${n}" maxlength="16" placeholder="Codice Fiscale"
+          autocomplete="off"
+          oninput="onCfInput(this)"
+          onfocus="showDropdown(this)"
+          onblur="hideDropdown(this)" />
+        <div class="cf-dropdown" id="drop${n}"></div>
+      </div>
       <div><input type="text" id="cc${n}" maxlength="50" placeholder="(opzionale)" /></div>
       <div><input type="date" id="di${n}" /></div>
-      <div style="display:flex;gap:6px;align-items:center;">
-        <input type="date" id="df${n}" style="flex:1;" />
-        <button class="btn-danger" style="padding:7px 10px;font-size:0.75rem;" onclick="removeWorker(${n})">✕</button>
+      <div><input type="date" id="df${n}" /></div>
+      <div>
+        <button class="btn-save-worker" title="Salva in rubrica" onclick="saveWorkerFromRow(${n})">💾</button>
       </div>
     `;
     list.appendChild(row);
   }
 
-  function removeWorker(n) {
-    const row = document.getElementById('worker-' + n);
-    if (row) row.remove();
+  function saveWorkerFromRow(n) {
+    const cf = document.getElementById('cf' + n).value.trim().toUpperCase();
+    if (!cf) { showAlert('Inserisci prima il Codice Fiscale del lavoratore.', 'warn'); return; }
+    openSaveModal(cf);
   }
 
-  function showAlert(msg) {
-    const el = document.getElementById('alert-msg');
-    el.textContent = msg;
-    el.style.display = 'block';
-    setTimeout(() => { el.style.display = 'none'; }, 4000);
+  function onCfInput(inp) {
+    updateDropdown(inp);
   }
 
-  function formatDate(val) {
-    if (!val) return '';
-    // val is YYYY-MM-DD from date input, convert to DD/MM/YYYY
-    const [y, m, d] = val.split('-');
-    return `${d}/${m}/${y}`;
+  function updateDropdown(inp) {
+    const val = inp.value.trim().toUpperCase();
+    const rubrica = getRubrica();
+    const id = inp.id;
+    const dropId = 'drop' + id.replace('cf', '');
+    const drop = document.getElementById(dropId);
+    if (!drop) return;
+
+    const matches = rubrica.filter(w =>
+      w.cf.includes(val) || w.name.toUpperCase().includes(val)
+    );
+
+    if (matches.length === 0 || val.length === 16) {
+      drop.style.display = 'none';
+      return;
+    }
+
+    drop.innerHTML = matches.map((w, i) => `
+      <div class="cf-dropdown-item"
+        onmousedown="selectFromDropdown('${id}', '${escAttr(w.cf)}')"
+      >
+        <span class="cf-name">${escHtml(w.name)}</span>
+        <span class="cf-code">${escHtml(w.cf)}</span>
+      </div>
+    `).join('');
+    drop.style.display = 'block';
   }
 
+  function showDropdown(inp) {
+    updateDropdown(inp);
+  }
+
+  function hideDropdown(inp) {
+    const id = inp.id;
+    const dropId = 'drop' + id.replace('cf', '');
+    const drop = document.getElementById(dropId);
+    if (drop) setTimeout(() => { drop.style.display = 'none'; }, 150);
+  }
+
+  function selectFromDropdown(inputId, cf) {
+    document.getElementById(inputId).value = cf;
+    const dropId = 'drop' + inputId.replace('cf', '');
+    const drop = document.getElementById(dropId);
+    if (drop) drop.style.display = 'none';
+  }
+
+  // ── XML generation ───────────────────────────────────────────
   function generateXML() {
     const cfDatore = document.getElementById('cf-datore').value.trim().toUpperCase();
     const email = document.getElementById('email').value.trim();
     const annullamento = document.getElementById('annullamento').checked ? '1' : '0';
 
-    if (!cfDatore) { showAlert('Inserire il Codice Fiscale del Datore di Lavoro.'); return; }
-    if (!email) { showAlert('Inserire l\'indirizzo e-mail.'); return; }
+    if (!cfDatore) { showAlert('Inserire il Codice Fiscale del Datore di Lavoro.', 'warn'); return; }
+    if (!email) { showAlert("Inserire l'indirizzo e-mail.", 'warn'); return; }
 
-    // collect workers
     const workers = [];
     for (let i = 1; i <= 10; i++) {
       const cfEl = document.getElementById('cf' + i);
@@ -477,24 +717,19 @@
       const cc = document.getElementById('cc' + i).value.trim();
       const di = document.getElementById('di' + i).value;
       const df = document.getElementById('df' + i).value;
-      if (cf || di || df) {
-        workers.push({ cf, cc, di: formatDate(di), df: formatDate(df), idx: i });
-      }
+      if (cf || di || df) workers.push({ cf, cc, di: fmtDate(di), df: fmtDate(df), idx: i });
     }
 
-    if (workers.length === 0) { showAlert('Inserire almeno un lavoratore.'); return; }
+    if (workers.length === 0) { showAlert('Inserire almeno un lavoratore.', 'warn'); return; }
 
-    // validate workers
     for (const w of workers) {
-      if (!w.cf) { showAlert(`Lavoratore ${w.idx}: Codice Fiscale mancante.`); return; }
-      if (!w.di) { showAlert(`Lavoratore ${w.idx}: Data di inizio mancante.`); return; }
-      if (!w.df) { showAlert(`Lavoratore ${w.idx}: Data di fine mancante.`); return; }
+      if (!w.cf) { showAlert(`Lavoratore ${w.idx}: Codice Fiscale mancante.`, 'warn'); return; }
+      if (!w.di) { showAlert(`Lavoratore ${w.idx}: Data di inizio mancante.`, 'warn'); return; }
+      if (!w.df) { showAlert(`Lavoratore ${w.idx}: Data di fine mancante.`, 'warn'); return; }
     }
 
-    // build XML — pad to 10 slots
     let xml = `<?xml version="1.0" encoding="UTF-8"?>\n`;
-    xml += `<moduloIntermittenti>\n`;
-    xml += `  <Campi>\n`;
+    xml += `<moduloIntermittenti>\n  <Campi>\n`;
     xml += `    <CFdatorelavoro>${esc(cfDatore)}</CFdatorelavoro>\n`;
     xml += `    <BCbarcodeModello01>ML-15-01</BCbarcodeModello01>\n`;
     xml += `    <BCbarcodeModello01>ML-15-01</BCbarcodeModello01>\n`;
@@ -502,55 +737,34 @@
     xml += `    <ANannullamento>${annullamento}</ANannullamento>\n`;
 
     for (let i = 1; i <= 10; i++) {
-      const w = workers.find(x => x.idx === i) || null;
-      // find positional worker (ordered)
-      const pw = workers[i - 1] || null;
-      const slot = pw;
+      const slot = workers[i - 1] || null;
       if (slot) {
         xml += `    <CFlavoratore${i}>${esc(slot.cf)}</CFlavoratore${i}>\n`;
         xml += `    <CCcodcomunicazione${i}>${esc(slot.cc)}</CCcodcomunicazione${i}>\n`;
         xml += `    <DTdatainizio${i}>${esc(slot.di)}</DTdatainizio${i}>\n`;
         xml += `    <DTdatafine${i}>${esc(slot.df)}</DTdatafine${i}>\n`;
       } else {
-        xml += `    <CFlavoratore${i}/>\n`;
-        xml += `    <CCcodcomunicazione${i}/>\n`;
-        xml += `    <DTdatainizio${i}/>\n`;
-        xml += `    <DTdatafine${i}/>\n`;
+        xml += `    <CFlavoratore${i}/>\n    <CCcodcomunicazione${i}/>\n    <DTdatainizio${i}/>\n    <DTdatafine${i}/>\n`;
       }
     }
 
-    xml += `  </Campi>\n`;
-    xml += `</moduloIntermittenti>\n`;
+    xml += `  </Campi>\n</moduloIntermittenti>\n`;
 
     document.getElementById('xml-code').textContent = xml;
     document.getElementById('xml-output').style.display = 'block';
     document.getElementById('xml-output').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
-  function esc(str) {
-    return String(str)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;');
-  }
-
   function copyXML() {
-    const text = document.getElementById('xml-code').textContent;
-    navigator.clipboard.writeText(text).then(() => {
-      showAlert('XML copiato negli appunti!');
-    });
+    navigator.clipboard.writeText(document.getElementById('xml-code').textContent)
+      .then(() => showAlert('XML copiato negli appunti!', 'success'));
   }
 
   function downloadXML() {
-    const text = document.getElementById('xml-code').textContent;
-    const blob = new Blob([text], { type: 'application/xml' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'modulo_CONTRATTO_INTERMITTENTE.xml';
+    const blob = new Blob([document.getElementById('xml-code').textContent], { type: 'application/xml' });
+    const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(blob), download: 'modulo_CONTRATTO_INTERMITTENTE.xml' });
     a.click();
-    URL.revokeObjectURL(url);
+    URL.revokeObjectURL(a.href);
   }
 
   function resetForm() {
@@ -560,12 +774,42 @@
     document.getElementById('workers-list').innerHTML = '';
     workerCount = 0;
     document.getElementById('xml-output').style.display = 'none';
+    localStorage.removeItem(KEY_DATORE);
+    document.getElementById('saved-badge').style.display = 'none';
+    addWorker(); addWorker(); addWorker();
   }
 
-  // Start with 3 worker rows
-  addWorker();
-  addWorker();
-  addWorker();
+  // ── Helpers ──────────────────────────────────────────────────
+  function fmtDate(val) {
+    if (!val) return '';
+    const [y, m, d] = val.split('-');
+    return `${d}/${m}/${y}`;
+  }
+
+  function esc(str) {
+    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function escHtml(str) { return esc(str); }
+  function escAttr(str) { return String(str).replace(/'/g, "\\'"); }
+
+  function showAlert(msg, type = 'warn') {
+    const el = document.getElementById('alert-msg');
+    el.textContent = msg;
+    el.className = 'alert ' + type;
+    el.style.display = 'block';
+    setTimeout(() => { el.style.display = 'none'; }, 3500);
+  }
+
+  function debounce(fn, ms) {
+    let t;
+    return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
+  }
+
+  // ── Init ─────────────────────────────────────────────────────
+  loadDatore();
+  renderRubrica();
+  addWorker(); addWorker(); addWorker();
 </script>
 </body>
 </html>
