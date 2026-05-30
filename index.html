@@ -728,27 +728,37 @@
       if (!w.df) { showAlert(`Lavoratore ${w.idx}: Data di fine mancante.`, 'warn'); return; }
     }
 
+    // Format exactly as the ministerial XML: newline before > of every tag
+    const t = (name, value) =>
+      (value !== '' && value !== null && value !== undefined)
+        ? `<${name}\n>${esc(value)}</${name}\n>`
+        : `<${name}\n/>`;
+
     let xml = `<?xml version="1.0" encoding="UTF-8"?>\n`;
-    xml += `<moduloIntermittenti>\n  <Campi>\n`;
-    xml += `    <CFdatorelavoro>${esc(cfDatore)}</CFdatorelavoro>\n`;
-    xml += `    <BCbarcodeModello01>ML-15-01</BCbarcodeModello01>\n`;
-    xml += `    <BCbarcodeModello01>ML-15-01</BCbarcodeModello01>\n`;
-    xml += `    <EMmail>${esc(email)}</EMmail>\n`;
-    xml += `    <ANannullamento>${annullamento}</ANannullamento>\n`;
+    xml += `<moduloIntermittenti\n>`;
+    xml += `<Campi\n>`;
+    xml += t('CFdatorelavoro', cfDatore);
+    xml += t('BCbarcodeModello01', 'ML-15-01');
+    xml += t('BCbarcodeModello01', 'ML-15-01');
+    xml += t('EMmail', email);
+    xml += t('ANannullamento', annullamento);
 
     for (let i = 1; i <= 10; i++) {
       const slot = workers[i - 1] || null;
       if (slot) {
-        xml += `    <CFlavoratore${i}>${esc(slot.cf)}</CFlavoratore${i}>\n`;
-        xml += `    <CCcodcomunicazione${i}>${esc(slot.cc)}</CCcodcomunicazione${i}>\n`;
-        xml += `    <DTdatainizio${i}>${esc(slot.di)}</DTdatainizio${i}>\n`;
-        xml += `    <DTdatafine${i}>${esc(slot.df)}</DTdatafine${i}>\n`;
+        xml += t(`CFlavoratore${i}`, slot.cf);
+        xml += t(`CCcodcomunicazione${i}`, slot.cc);
+        xml += t(`DTdatainizio${i}`, slot.di);
+        xml += t(`DTdatafine${i}`, slot.df);
       } else {
-        xml += `    <CFlavoratore${i}/>\n    <CCcodcomunicazione${i}/>\n    <DTdatainizio${i}/>\n    <DTdatafine${i}/>\n`;
+        xml += `<CFlavoratore${i}\n/>`;
+        xml += `<CCcodcomunicazione${i}\n/>`;
+        xml += `<DTdatainizio${i}\n/>`;
+        xml += `<DTdatafine${i}\n/>`;
       }
     }
 
-    xml += `  </Campi>\n</moduloIntermittenti>\n`;
+    xml += `</Campi\n></moduloIntermittenti\n>`;
 
     document.getElementById('xml-code').textContent = xml;
     document.getElementById('xml-output').style.display = 'block';
