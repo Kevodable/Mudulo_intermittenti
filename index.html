@@ -654,16 +654,21 @@
     updateDropdown(inp);
   }
 
+  function closeAllDropdowns() {
+    document.querySelectorAll('.cf-dropdown').forEach(d => { d.style.display = 'none'; });
+  }
+
   function updateDropdown(inp) {
     const val = inp.value.trim().toUpperCase();
     const rubrica = getRubrica();
+    if (rubrica.length === 0) return;
     const id = inp.id;
     const dropId = 'drop' + id.replace('cf', '');
     const drop = document.getElementById(dropId);
     if (!drop) return;
 
     const matches = rubrica.filter(w =>
-      w.cf.includes(val) || w.name.toUpperCase().includes(val)
+      val === '' || w.cf.includes(val) || w.name.toUpperCase().includes(val)
     );
 
     if (matches.length === 0 || val.length === 16) {
@@ -671,7 +676,7 @@
       return;
     }
 
-    drop.innerHTML = matches.map((w, i) => `
+    drop.innerHTML = matches.map(w => `
       <div class="cf-dropdown-item"
         onmousedown="selectFromDropdown('${id}', '${escAttr(w.cf)}')"
       >
@@ -683,6 +688,7 @@
   }
 
   function showDropdown(inp) {
+    closeAllDropdowns();
     updateDropdown(inp);
   }
 
@@ -690,14 +696,13 @@
     const id = inp.id;
     const dropId = 'drop' + id.replace('cf', '');
     const drop = document.getElementById(dropId);
-    if (drop) setTimeout(() => { drop.style.display = 'none'; }, 150);
+    // delay to allow onmousedown to fire before hiding
+    if (drop) setTimeout(() => { drop.style.display = 'none'; }, 200);
   }
 
   function selectFromDropdown(inputId, cf) {
     document.getElementById(inputId).value = cf;
-    const dropId = 'drop' + inputId.replace('cf', '');
-    const drop = document.getElementById(dropId);
-    if (drop) drop.style.display = 'none';
+    closeAllDropdowns();
   }
 
   // ── XML generation ───────────────────────────────────────────
@@ -778,14 +783,10 @@
   }
 
   function resetForm() {
-    document.getElementById('cf-datore').value = '';
-    document.getElementById('email').value = '';
     document.getElementById('annullamento').checked = false;
     document.getElementById('workers-list').innerHTML = '';
     workerCount = 0;
     document.getElementById('xml-output').style.display = 'none';
-    localStorage.removeItem(KEY_DATORE);
-    document.getElementById('saved-badge').style.display = 'none';
     addWorker(); addWorker(); addWorker();
   }
 
